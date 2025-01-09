@@ -2,7 +2,12 @@
 #![deny(warnings)]
 
 #[macro_use]
-#[allow(non_camel_case_types, clippy::useless_transmute)]
+#[allow(
+    non_camel_case_types,
+    clippy::useless_transmute,
+    clippy::missing_safety_doc,
+    clippy::ptr_offset_with_cast
+)]
 pub mod bindings {
     include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 

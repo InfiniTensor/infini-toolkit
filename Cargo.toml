@@ -1,3 +1,8 @@
 [workspace]
 members = ["infini-rt", "infini-op", "infini-ccl", "search-infini-tools"]
 resolver = "2"
+
+[workspace.dependencies]
+search-infini-tools = { version = "0.0", path = "search-infini-tools" }
+build-script-cfg = "0.0"
+bindgen = "0.71"

@@ -8,6 +8,6 @@ authors = ["YdrMaster <ydrml@hotmail.com>"]
 digit-layout = "0.2"
 
 [build-dependencies]
-build-script-cfg = "0.0"
-bindgen = "0.70"
-search-infini-tools = { version = "0.0", path = "../search-infini-tools" }
+build-script-cfg.workspace = true
+bindgen.workspace = true
+search-infini-tools.workspace = true
