@@ -15,19 +15,25 @@ impl Device {
     #[inline]
     pub fn memcpy_d2d(&self, dst: &mut [DevByte], src: &[DevByte]) {
         let (dst, src, len) = memcpy_ptr(dst, src);
-        infinirt!(infinirtMemcpy(dst, src, self.ty, self.id, len,))
+        if len > 0 {
+            infinirt!(infinirtMemcpy(dst, src, self.ty, self.id, len))
+        }
     }
 
     #[inline]
     pub fn memcpy_h2d<T: Copy>(&self, dst: &mut [DevByte], src: &[T]) {
         let (dst, src, len) = memcpy_ptr(dst, src);
-        infinirt!(infinirtMemcpyH2D(dst, self.ty, self.id, src, len,))
+        if len > 0 {
+            infinirt!(infinirtMemcpyH2D(dst, self.ty, self.id, src, len))
+        }
     }
 
     #[inline]
     pub fn memcpy_d2h<T: Copy>(&self, dst: &mut [T], src: &[DevByte]) {
         let (dst, src, len) = memcpy_ptr(dst, src);
-        infinirt!(infinirtMemcpyD2H(dst, src, self.ty, self.id, len))
+        if len > 0 {
+            infinirt!(infinirtMemcpyD2H(dst, src, self.ty, self.id, len))
+        }
     }
 }
 
@@ -35,15 +41,19 @@ impl Stream {
     #[inline]
     pub fn memcpy_d2d(&self, dst: &mut [DevByte], src: &[DevByte]) {
         let (dst, src, len) = memcpy_ptr(dst, src);
-        let Device { ty, id } = self.get_device();
-        infinirt!(infinirtMemcpyAsync(dst, src, ty, id, len, self.as_raw()))
+        if len > 0 {
+            let Device { ty, id } = self.get_device();
+            infinirt!(infinirtMemcpyAsync(dst, src, ty, id, len, self.as_raw()))
+        }
     }
 
     #[inline]
     pub fn memcpy_h2d<T: Copy>(&self, dst: &mut [DevByte], src: &[T]) {
         let (dst, src, len) = memcpy_ptr(dst, src);
-        let Device { ty, id } = self.get_device();
-        infinirt!(infinirtMemcpyH2DAsync(dst, ty, id, src, len, self.as_raw()))
+        if len > 0 {
+            let Device { ty, id } = self.get_device();
+            infinirt!(infinirtMemcpyH2DAsync(dst, ty, id, src, len, self.as_raw()))
+        }
     }
 }
 
@@ -150,7 +160,7 @@ impl Stream {
             dev.ty,
             dev.id,
             self.as_raw()
-        ));
+        ))
     }
 }
 
